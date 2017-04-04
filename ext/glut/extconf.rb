@@ -18,7 +18,7 @@ if enable_config('win32-cross')
   gem "mini_portile2", "~> 2.0"
   require "mini_portile2"
 
-  LIBFREEGLUT_VERSION = ENV['LIBFREEGLUT_VERSION'] || '2.8.1'
+  LIBFREEGLUT_VERSION = ENV['LIBFREEGLUT_VERSION'] || '3.0.0'
   LIBFREEGLUT_SOURCE_URI = "http://downloads.sourceforge.net/project/freeglut/freeglut/#{LIBFREEGLUT_VERSION}/freeglut-#{LIBFREEGLUT_VERSION}.tar.gz"
 
   recipe = MiniPortile.new("libglut", LIBFREEGLUT_VERSION)
