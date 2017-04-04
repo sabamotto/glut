@@ -859,6 +859,20 @@ VALUE obj,arg1;
 	return Qnil;
 }
 
+#ifdef HAVE_GL_FREEGLUT_H
+static VALUE
+glut_SetOption(obj,arg1,arg2)
+VALUE obj,arg1,arg2;
+{
+	GLenum e_what;
+	int value;
+	e_what = (GLenum)NUM2INT(arg1);
+	value = NUM2INT(arg2);
+	glutSetOption(e_what, value);
+	return Qnil;
+}
+#endif
+
 void Init_glut_callbacks(void);
 void Init_glut_ext(void);
 
@@ -961,6 +975,10 @@ void Init_glut() {
 	rb_define_module_function(mGlut, "glutIgnoreKeyRepeat", glut_IgnoreKeyRepeat, 1);
 	rb_define_module_function(mGlut, "glutPostWindowOverlayRedisplay", glut_PostWindowOverlayRedisplay, 1);
 	rb_define_module_function(mGlut, "glutPostWindowRedisplay", glut_PostWindowRedisplay, 1);
+
+#ifdef HAVE_GL_FREEGLUT_H
+	rb_define_module_function(mGlut, "glutSetOption", glut_SetOption, 2);
+#endif
 
 	rb_define_const(mGlut, "GLUT_API_VERSION", INT2NUM(GLUT_API_VERSION));
 	rb_define_const(mGlut, "GLUT_XLIB_IMPLEMENTATION", INT2NUM(GLUT_XLIB_IMPLEMENTATION));
@@ -1138,6 +1156,25 @@ void Init_glut() {
 	rb_define_const(mGlut, "GLUT_GAME_MODE_PIXEL_DEPTH", INT2NUM(GLUT_GAME_MODE_PIXEL_DEPTH));
 	rb_define_const(mGlut, "GLUT_GAME_MODE_REFRESH_RATE", INT2NUM(GLUT_GAME_MODE_REFRESH_RATE));
 	rb_define_const(mGlut, "GLUT_GAME_MODE_DISPLAY_CHANGED", INT2NUM(GLUT_GAME_MODE_DISPLAY_CHANGED));
+
+#ifdef HAVE_GL_FREEGLUT_H
+	rb_define_const(mGlut, "GLUT_ACTION_ON_WINDOW_CLOSE", INT2NUM(GLUT_ACTION_ON_WINDOW_CLOSE));
+	rb_define_const(mGlut, "GLUT_ACTION_EXIT", INT2NUM(GLUT_ACTION_EXIT));
+	rb_define_const(mGlut, "GLUT_ACTION_GLUTMAINLOOP_RETURNS", INT2NUM(GLUT_ACTION_GLUTMAINLOOP_RETURNS));
+	rb_define_const(mGlut, "GLUT_INIT_DISPLAY_MODE", INT2NUM(GLUT_INIT_DISPLAY_MODE));
+	rb_define_const(mGlut, "GLUT_INIT_WINDOW_X", INT2NUM(GLUT_INIT_WINDOW_X));
+	rb_define_const(mGlut, "GLUT_INIT_WINDOW_Y", INT2NUM(GLUT_INIT_WINDOW_Y));
+	rb_define_const(mGlut, "GLUT_INIT_WINDOW_WIDTH", INT2NUM(GLUT_INIT_WINDOW_WIDTH));
+	rb_define_const(mGlut, "GLUT_INIT_WINDOW_HEIGHT", INT2NUM(GLUT_INIT_WINDOW_HEIGHT));
+	rb_define_const(mGlut, "GLUT_RENDERING_CONTEXT", INT2NUM(GLUT_RENDERING_CONTEXT));
+	rb_define_const(mGlut, "GLUT_CREATE_NEW_CONTEXT", INT2NUM(GLUT_CREATE_NEW_CONTEXT));
+	rb_define_const(mGlut, "GLUT_USE_CURRENT_CONTEXT", INT2NUM(GLUT_USE_CURRENT_CONTEXT));
+	rb_define_const(mGlut, "GLUT_WINDOW_CURSOR", INT2NUM(GLUT_WINDOW_CURSOR));
+	rb_define_const(mGlut, "GLUT_AUX", INT2NUM(GLUT_AUX));
+	rb_define_const(mGlut, "GLUT_MULTISAMPLE", INT2NUM(GLUT_MULTISAMPLE));
+	rb_define_const(mGlut, "GLUT_GEOMETRY_VISUALIZE_NORMALS", INT2NUM(GLUT_GEOMETRY_VISUALIZE_NORMALS));
+	rb_define_const(mGlut, "GLUT_STROKE_FONT_DRAW_JOIN_DOTS", INT2NUM(GLUT_STROKE_FONT_DRAW_JOIN_DOTS));
+#endif
 
 	// Some OSX specific constants
 #ifdef GLUT_NO_RECOVERY
